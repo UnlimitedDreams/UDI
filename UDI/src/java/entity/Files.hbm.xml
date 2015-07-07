@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Files" table="files" schema="public" optimistic-lock="version">
+        <id name="idfile" type="big_decimal">
+            <column name="idfile" precision="131089" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="scambio" class="entity.Scambio" fetch="select">
+            <column name="idsolicitud" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="filename" type="string">
+            <column name="filename" not-null="true" />
+        </property>
+        <property name="filepath" type="string">
+            <column name="filepath" not-null="true" />
+        </property>
+        <property name="fechacreacion" type="date">
+            <column name="fechacreacion" length="13" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Telefonos" table="telefonos" schema="public" optimistic-lock="version">
+        <id name="idphone" type="big_decimal">
+            <column name="idphone" precision="131089" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="persona" class="entity.Persona" fetch="select">
+            <column name="idpersona" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="numero" type="string">
+            <column name="numero" length="15" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Scambio" table="scambio" schema="public" optimistic-lock="version">
+        <id name="idsolicitud" type="big_decimal">
+            <column name="idsolicitud" precision="131089" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="estados" class="entity.Estados" fetch="select">
+            <column name="idestado" precision="3" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarios" class="entity.Usuarios" fetch="select">
+            <column name="idusu" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="titulo" type="string">
+            <column name="titulo" length="135" not-null="true" />
+        </property>
+        <property name="shortdesc" type="string">
+            <column name="shortdesc" length="300" not-null="true" />
+        </property>
+        <property name="fechaapertura" type="date">
+            <column name="fechaapertura" length="13" not-null="true" />
+        </property>
+        <property name="fechacierre" type="date">
+            <column name="fechacierre" length="13" />
+        </property>
+        <property name="longdesc" type="string">
+            <column name="longdesc" />
+        </property>
+        <set name="fileses" table="files" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idsolicitud" precision="131089" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.Files" />
+        </set>
+        <set name="revisioneses" table="revisiones" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idsolicitud" precision="131089" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.Revisiones" />
+        </set>
+    </class>
+</hibernate-mapping>

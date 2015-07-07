@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Usuarios" table="usuarios" schema="public" optimistic-lock="version">
+        <id name="idusu" type="big_decimal">
+            <column name="idusu" precision="131089" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="persona" class="entity.Persona" fetch="select">
+            <column name="idpersona" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="nusuario" type="string">
+            <column name="nusuario" length="10" not-null="true" />
+        </property>
+        <property name="pass" type="string">
+            <column name="pass" length="16" not-null="true" />
+        </property>
+        <property name="lta" type="date">
+            <column name="lta" length="13" not-null="true" />
+        </property>
+        <set name="scambios" table="scambio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idusu" precision="131089" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.Scambio" />
+        </set>
+        <set name="usuariorols" table="usuariorol" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idusu" precision="131089" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.Usuariorol" />
+        </set>
+        <set name="grupousuarios" table="grupousuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idusu" precision="131089" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.Grupousuario" />
+        </set>
+    </class>
+</hibernate-mapping>

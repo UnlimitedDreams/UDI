@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Rolatividad" table="rolatividad" schema="public" optimistic-lock="version">
+        <composite-id name="id" class="entity.RolatividadId">
+            <key-property name="codrol" type="big_decimal">
+                <column name="codrol" precision="131089" scale="0" />
+            </key-property>
+            <key-property name="codactividad" type="short">
+                <column name="codactividad" precision="4" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="actividad" class="entity.Actividad" update="false" insert="false" fetch="select">
+            <column name="codactividad" precision="4" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="rol" class="entity.Rol" update="false" insert="false" fetch="select">
+            <column name="codrol" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

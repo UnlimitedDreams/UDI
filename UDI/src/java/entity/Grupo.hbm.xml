@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Grupo" table="grupo" schema="public" optimistic-lock="version">
+        <id name="idgrupo" type="big_decimal">
+            <column name="idgrupo" precision="131089" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="area" type="string">
+            <column name="area" length="20" not-null="true" />
+        </property>
+        <property name="fechacreacion" type="date">
+            <column name="fechacreacion" length="13" not-null="true" />
+        </property>
+        <property name="fechacierre" type="date">
+            <column name="fechacierre" length="13" />
+        </property>
+        <set name="grupousuarios" table="grupousuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idgrupo" precision="131089" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.Grupousuario" />
+        </set>
+    </class>
+</hibernate-mapping>

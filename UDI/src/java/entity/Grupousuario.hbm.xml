@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2015 11:43:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Grupousuario" table="grupousuario" schema="public" optimistic-lock="version">
+        <composite-id name="id" class="entity.GrupousuarioId">
+            <key-property name="idusu" type="big_decimal">
+                <column name="idusu" precision="131089" scale="0" />
+            </key-property>
+            <key-property name="idgrupo" type="big_decimal">
+                <column name="idgrupo" precision="131089" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="grupo" class="entity.Grupo" update="false" insert="false" fetch="select">
+            <column name="idgrupo" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarios" class="entity.Usuarios" update="false" insert="false" fetch="select">
+            <column name="idusu" precision="131089" scale="0" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/UDI</property>
+    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.password">Juan</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+    <property name="hibernate.format_sql">true</property>
+    <mapping resource="entity/Telefonos.hbm.xml"/>
+    <mapping resource="entity/Grupousuario.hbm.xml"/>
+    <mapping resource="entity/Estados.hbm.xml"/>
+    <mapping resource="entity/Rolatividad.hbm.xml"/>
+    <mapping resource="entity/Files.hbm.xml"/>
+    <mapping resource="entity/Scambio.hbm.xml"/>
+    <mapping resource="entity/Usuarios.hbm.xml"/>
+    <mapping resource="entity/Correos.hbm.xml"/>
+    <mapping resource="entity/Actividad.hbm.xml"/>
+    <mapping resource="entity/Usuariorol.hbm.xml"/>
+    <mapping resource="entity/Grupo.hbm.xml"/>
+    <mapping resource="entity/Revisiones.hbm.xml"/>
+    <mapping resource="entity/Persona.hbm.xml"/>
+    <mapping resource="entity/Rol.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
