@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : 23-jul-2015, 15:09:48
+    Author     : usuario
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,7 +42,7 @@
                 <h3>Garant&iacute;a y mejora de procesos<br>con un solo Clik</h3>
                 <br>
                 <a href="#about" class="btn btn-dark btn-lg">Aprende m&aacute;s</a>
-                <a href="login.html" class="btn btn-light btn-lg">Accede</a>
+                <a href="login.jsp" class="btn btn-light btn-lg">Accede</a>
             </div>
 
         </header>

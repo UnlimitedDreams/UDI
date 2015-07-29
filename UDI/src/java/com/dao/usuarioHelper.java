@@ -5,10 +5,10 @@
  */
 package com.dao;
 
-import entity.Persona;
 import entity.Usuarios;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -16,26 +16,24 @@ import util.md5;
 
 /**
  *
- * @author usuario
+ * @author Miguel Angel Lemos
  */
-public class usuarioHelper {
-
-    Date fecha;
-    Session session = null;
+public class usuarioHelper implements helper {
 
     public usuarioHelper() {
-        fecha = new Date();
-        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+
     }
 
-    public boolean ingresar() {
-        session.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
+    public boolean ingresar(String user, String pass) {
+        s.getSessionFactory().openSession();
+        Transaction t = s.beginTransaction();
         try {
-            Usuarios u = (Usuarios) session.createQuery("from Usuarios as U where U.nusuario = 'superUsu' and U.pass='superUsu'").uniqueResult();
+            Usuarios u = (Usuarios) s.createQuery("from Usuarios as U "
+                    + "where U.nusuario = '" + user + "' "
+                    + "and U.pass='" + pass + "'").uniqueResult();
             if (u != null) {
                 u.setLta(fecha);
-                session.save(u);
+                s.save(u);
                 t.commit();
                 return true;
             } else {
@@ -43,19 +41,19 @@ public class usuarioHelper {
                 return false;
             }
         } catch (Exception e) {
-            session.close();
+            s.close();
             return false;
         }
     }
 
     public boolean actualizarPass(String id, String pass) {
-        session.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
+        s.getSessionFactory().openSession();
+        Transaction t = s.beginTransaction();
         Usuarios u = new Usuarios();
         try {
-            u = (Usuarios) session.get(Usuarios.class, BigDecimal.valueOf(Integer.parseInt(id)));
+            u = (Usuarios) s.get(Usuarios.class, BigDecimal.valueOf(Integer.parseInt(id)));
             u.setPass(md5.getMD5(pass));
-            session.update(u);
+            s.update(u);
             t.commit();
             return true;
         } catch (Exception e) {
@@ -67,9 +65,10 @@ public class usuarioHelper {
         }
     }
 
-    public boolean buscarUsu(String id) {
+    @Override
+    public boolean buscar(String id) {
         try {
-            Usuarios u = (Usuarios) session.createQuery("from Usuarios as U where U.idusu = '" + id + "'").uniqueResult();
+            Usuarios u = (Usuarios) s.createQuery("from Usuarios as U where U.idusu = '" + id + "'").uniqueResult();
             if (u != null) {
                 return true;
             } else {
@@ -80,13 +79,14 @@ public class usuarioHelper {
         }
     }
 
-    public boolean borrarUsu(String id) {
-        session.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
+    @Override
+    public boolean borrar(String id) {
+        s.getSessionFactory().openSession();
+        Transaction t = s.beginTransaction();
         Usuarios u = new Usuarios();
         try {
-            u = (Usuarios) session.get(Usuarios.class, BigDecimal.valueOf(Integer.parseInt(id)));
-            session.delete(u);
+            u = (Usuarios) s.get(Usuarios.class, BigDecimal.valueOf(Integer.parseInt(id)));
+            s.delete(u);
             t.commit();
             return true;
         } catch (Exception e) {
@@ -98,17 +98,17 @@ public class usuarioHelper {
         }
     }
 
-    public boolean agregarUsu(Usuarios u) {
-        session.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
+    @Override
+    public boolean agregar(Object y) {
+        Usuarios u = (Usuarios) y;
+        s.getSessionFactory().openSession();
+        Transaction t = s.beginTransaction();
         try {
-            if (!buscarUsu(u.getIdusu().toString())) {
-                System.out.println("No");
-                session.save(u);
+            if (!buscar(u.getIdusu().toString())) {
+                s.save(u);
                 t.commit();
                 return true;
             } else {
-                System.out.println("Si");
                 return false;
             }
 
@@ -121,14 +121,16 @@ public class usuarioHelper {
         }
     }
 
-    public boolean actualizarUsu(Usuarios x) {
-        session.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
+    @Override
+    public boolean actualizar(Object y) {
+        Usuarios x = (Usuarios) y;
+        s.getSessionFactory().openSession();
+        Transaction t = s.beginTransaction();
         Usuarios u = new Usuarios();
         try {
-            u = (Usuarios) session.get(Usuarios.class, x.getIdusu());
+            u = (Usuarios) s.get(Usuarios.class, x.getIdusu());
             u = x;
-            session.update(u);
+            s.update(u);
             t.commit();
             return true;
         } catch (Exception e) {
@@ -140,12 +142,31 @@ public class usuarioHelper {
         }
     }
 
-//    public static void main(String[] args) {
-//        usuarioHelper x = new usuarioHelper();
-//
-//        //x.buscarUsu("-1");
-//        // System.out.println(x.agregarUsu(new Usuarios(BigDecimal.valueOf(1234), new Persona(BigDecimal.valueOf(-1), null, null), "Prueba", "1231", x.fecha)));
-//        // x.borrarUsu("1234");
-//    }
+    @Override
+    public List listarTodo() {
+        s.getSessionFactory().openSession();
+        Transaction t = s.beginTransaction();
+        try {
+            return s.createQuery("from Usuarios").list();
+        } catch (Exception e) {
+            if (t != null) {
+                t.rollback();
+                return null;
+            }
+            throw e;
+        } finally {
+            t.commit();
+            s.getSessionFactory().close();
+        }
+    }
 
+    public int nroDeUsuarios() {
+        int u = 0;
+        try {
+            u = listarTodo().size();
+            return u + 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }
